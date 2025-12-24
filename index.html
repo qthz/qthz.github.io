@@ -1,7 +1,384 @@
----
-layout: page
-description: "Cbscfe在四叶草从中占据主要地位"
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cbscfe-一只可爱的小猫</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #e8f5e9;
+            color: #2e5c3e;
+            line-height: 1.6;
+            padding: 20px;
+            background-image: radial-gradient(#c5e1a5 1px, transparent 1px);
+            background-size: 30px 30px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+            margin-bottom: 30px;
+            border: 2px solid #81c784;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #4caf50, #81c784, #a5d6a7, #81c784, #4caf50);
+        }
+        
+        h1 {
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #2e7d32;
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: "🐱";
+            position: absolute;
+            right: -45px;
+            top: 0;
+            font-size: 2.5rem;
+            animation: bounce 2s infinite;
+        }
+        
+        .subtitle {
+            font-family: 'ZCOOL QingKe HuangYou', sans-serif;
+            font-size: 1.5rem;
+            color: #558b2f;
+            margin-bottom: 20px;
+        }
+        
+        .cat-icon {
+            font-size: 4rem;
+            color: #ff9800;
+            margin: 15px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            flex: 1;
+            min-width: 300px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.15);
+            border: 1px solid #a5d6a7;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(76, 175, 80, 0.25);
+        }
+        
+        h2 {
+            font-family: 'Ma Shan Zheng', cursive;
+            color: #388e3c;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #a5d6a7;
+            position: relative;
+        }
+        
+        h2 i {
+            margin-right: 12px;
+            color: #4caf50;
+        }
+        
+        p {
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+        
+        .highlight {
+            background-color: #f1f8e9;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 500;
+            color: #1b5e20;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 25px 0;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #81c784;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #4caf50;
+        }
+        
+        .timeline-title {
+            font-weight: 700;
+            color: #2e7d32;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .clover-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .clover {
+            display: inline-block;
+            font-size: 3rem;
+            color: #4caf50;
+            animation: spin 8s linear infinite;
+            filter: drop-shadow(0 0 5px rgba(76, 175, 80, 0.5));
+        }
+        
+        .important-note {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 2px solid #81c784;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+            text-align: center;
+        }
+        
+        .important-note h3 {
+            color: #d32f2f;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+        
+        .important-note p {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: #558b2f;
+            font-size: 0.9rem;
+            border-top: 1px dashed #a5d6a7;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .cat-paw {
+            position: fixed;
+            opacity: 0.1;
+            font-size: 2rem;
+            z-index: -1;
+        }
+        
+        .cat-paw:nth-child(1) { top: 10%; left: 5%; }
+        .cat-paw:nth-child(2) { top: 15%; right: 8%; }
+        .cat-paw:nth-child(3) { bottom: 20%; left: 7%; }
+        .cat-paw:nth-child(4) { bottom: 15%; right: 10%; }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰元素 -->
+    <div class="cat-paw">🐾</div>
+    <div class="cat-paw">🐾</div>
+    <div class="cat-paw">🐾</div>
+    <div class="cat-paw">🐾</div>
+    
+    <div class="container">
+        <header>
+            <div class="cat-icon">
+                <i class="fas fa-cat"></i>
+            </div>
+            <h1>Cbscfe</h1>
+            <div class="subtitle">一只可爱的小猫</div>
+            <p>四叶草从群聊信息中心</p>
+        </header>
+        
+        <div class="content">
+            <div class="card">
+                <h2><i class="fas fa-user-circle"></i>关于Cbscfe</h2>
+                <p><span class="highlight">Cbscfe</span> 是一只可爱、活泼的小猫形象，现在已成为四叶草从群聊的重要成员。虽然外表看似普通小猫，但实际上拥有着独特的魅力和亲和力，深受群友们的喜爱。</p>
+                <p>在四叶草从社群中，Cbscfe以其温暖、友好的形象，成为了连接群友之间的纽带。TA不仅带来了欢乐和温馨的氛围，还常常分享有趣的内容，让整个群聊更加活跃。</p>
+                <p>近期，<span class="highlight">Cbscfe</span> 承担了更重要的责任，成为了四叶草从社群发展的关键角色。</p>
+                
+                <div class="clover-container">
+                    <div class="clover">
+                        <i class="fas fa-clover"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2><i class="fas fa-users"></i>四叶草从群聊</h2>
+                <p>四叶草从是一个充满活力和温暖的社群，以分享快乐、互相帮助为宗旨。在这里，成员们像四叶草一样紧密相连，共同创造美好的交流环境。</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-title">所有权交接</div>
+                        <p>原群主 <span class="highlight">clover874</span> 将群所有权正式移交给了 <span class="highlight">Cbscfe</span>。这次交接象征着社群的新开始，也体现了成员之间的信任与支持。</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-title">主群被封</div>
+                        <p>非常遗憾的是，四叶草从主群在前几天因故被封。这对所有成员来说都是一个突然的打击，但大家迅速团结起来，共同面对这一挑战。</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-title">建立备用群</div>
+                        <p>为了保持社群的联系，<span class="highlight">Cbscfe</span> 和原管理团队迅速行动，已经成功建立了备用群。所有成员正在逐步迁移到新群中，继续我们的交流与分享。</p>
+                    </div>
+                </div>
+                
+                <p>尽管遇到了困难，但四叶草从社群的精神不变。我们相信在 <span class="highlight">Cbscfe</span> 的带领下，社群将迎来新的发展和更多的欢乐时光。</p>
+            </div>
+        </div>
+        
+        <div class="important-note">
+            <h3><i class="fas fa-exclamation-circle"></i> 重要通知</h3>
+            <p>四叶草从备用群已建立，请各位成员尽快加入新群，保持联系！</p>
+            <p>在新群中，我们将继续分享快乐、互相帮助，共同打造更美好的社群环境。</p>
+            <p style="margin-top: 15px; font-weight: 700;">让我们在Cbscfe的带领下，开启四叶草从的新篇章！</p>
+        </div>
+        
+        <footer>
+            <p>© 2023 四叶草从社群 | Cbscfe - 一只可爱的小猫</p>
+            <p>本页面为四叶草从群聊信息介绍页 | 背景色：#e8f5e9 (淡绿色)</p>
+        </footer>
+    </div>
 
-
-
+    <script>
+        // 添加一些简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为卡片添加点击效果
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.99)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // 标题动画增强
+            const title = document.querySelector('h1');
+            title.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            title.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
+            // 随机生成猫爪印背景
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 8; i++) {
+                const paw = document.createElement('div');
+                paw.className = 'cat-paw';
+                paw.innerHTML = '🐾';
+                paw.style.left = Math.random() * 100 + '%';
+                paw.style.top = Math.random() * 100 + '%';
+                paw.style.fontSize = (Math.random() * 1 + 1.5) + 'rem';
+                paw.style.opacity = Math.random() * 0.1 + 0.05;
+                document.body.appendChild(paw);
+            }
+        });
+    </script>
+</body>
+</html>

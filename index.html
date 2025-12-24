@@ -218,6 +218,118 @@
             font-weight: 500;
         }
         
+        .group-number-container {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.3);
+            text-align: center;
+            border: 3px solid #a5d6a7;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .group-number-container::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 0;
+        }
+        
+        .group-number-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .group-number {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px 30px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 10px 0;
+            font-family: 'ZCOOL QingKe HuangYou', monospace;
+            border: 3px dashed #ffeb3b;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .group-number:hover {
+            transform: scale(1.05);
+            background-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .group-number-copied {
+            font-size: 1rem;
+            color: #c8e6c9;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .group-number-copied.show {
+            opacity: 1;
+        }
+        
+        .group-instruction {
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .qr-placeholder {
+            width: 180px;
+            height: 180px;
+            background-color: white;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+        }
+        
+        .qr-placeholder .qr-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .qr-placeholder .qr-number {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #1b5e20;
+            letter-spacing: 2px;
+        }
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -258,6 +370,15 @@
             
             h2 {
                 font-size: 1.8rem;
+            }
+            
+            .group-number {
+                font-size: 2.5rem;
+                padding: 12px 20px;
+            }
+            
+            .group-number-title {
+                font-size: 1.5rem;
             }
         }
         
@@ -330,16 +451,38 @@
             </div>
         </div>
         
+        <!-- 备用群群号展示区域 -->
+        <div class="group-number-container">
+            <div class="group-number-title">
+                <i class="fas fa-users"></i> 四叶草从备用群群号
+            </div>
+            <div class="group-number" id="groupNumber">
+                1043212387
+            </div>
+            <div class="group-number-copied" id="copiedMessage">
+                群号已复制到剪贴板！
+            </div>
+            <div class="group-instruction">
+                点击上方群号即可复制，然后在QQ中搜索此群号申请加入
+            </div>
+            
+            <!-- 二维码占位图 -->
+            <div class="qr-placeholder">
+               
+                <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">(二维码区域)</div>
+            </div>
+        </div>
+        
         <div class="important-note">
             <h3><i class="fas fa-exclamation-circle"></i> 重要通知</h3>
-            <p>四叶草从备用群已建立，请各位成员尽快加入新群，保持联系！</p>
+            <p>四叶草从备用群已建立，群号：<strong>1043212387</strong>，请各位成员尽快加入新群，保持联系！</p>
             <p>在新群中，我们将继续分享快乐、互相帮助，共同打造更美好的社群环境。</p>
             <p style="margin-top: 15px; font-weight: 700;">让我们在Cbscfe的带领下，开启四叶草从的新篇章！</p>
         </div>
         
         <footer>
-            <p>© 2023 四叶草从社群 | Cbscfe - 一只可爱的小猫</p>
-            <p>本页面为四叶草从群聊信息介绍页 | 背景色：#e8f5e9 (淡绿色)</p>
+            <p>© 2023 四叶草从社群</p>
+          
         </footer>
     </div>
 
@@ -367,7 +510,6 @@
             });
             
             // 随机生成猫爪印背景
-            const container = document.querySelector('.container');
             for (let i = 0; i < 8; i++) {
                 const paw = document.createElement('div');
                 paw.className = 'cat-paw';
@@ -378,6 +520,45 @@
                 paw.style.opacity = Math.random() * 0.1 + 0.05;
                 document.body.appendChild(paw);
             }
+            
+            // 群号复制功能
+            const groupNumber = document.getElementById('groupNumber');
+            const copiedMessage = document.getElementById('copiedMessage');
+            
+            groupNumber.addEventListener('click', function() {
+                // 复制群号到剪贴板
+                const textArea = document.createElement('textarea');
+                textArea.value = '1043212387';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // 显示复制成功消息
+                copiedMessage.classList.add('show');
+                
+                // 3秒后隐藏消息
+                setTimeout(() => {
+                    copiedMessage.classList.remove('show');
+                }, 3000);
+                
+                // 添加视觉反馈
+                this.style.backgroundColor = 'rgba(76, 175, 80, 0.5)';
+                this.style.color = '#ffffff';
+                setTimeout(() => {
+                    this.style.backgroundColor = '';
+                    this.style.color = '';
+                }, 500);
+            });
+            
+            // 群号悬停效果
+            groupNumber.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            groupNumber.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>

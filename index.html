@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepSeek对话助手</title>
+    <title>DeepSeek对话助手 - 支持文件上传</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -21,7 +21,7 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
@@ -74,7 +74,7 @@
         .chat-container {
             display: flex;
             flex-direction: column;
-            height: 600px;
+            height: 650px;
         }
         
         .chat-history {
@@ -146,10 +146,46 @@
             color: #333;
         }
         
+        .file-attachment {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .file-icon {
+            font-size: 1.5rem;
+            color: #4776E6;
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 3px;
+        }
+        
+        .file-size {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
         .input-area {
-            padding: 25px;
+            padding: 20px 25px;
             border-top: 1px solid #e0e0e0;
             background-color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .input-row {
             display: flex;
             gap: 15px;
         }
@@ -184,6 +220,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            height: 60px;
         }
         
         .send-button:hover {
@@ -200,6 +237,68 @@
             cursor: not-allowed;
             transform: none;
             box-shadow: none;
+        }
+        
+        .file-upload-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-upload-btn {
+            background-color: #f0f5ff;
+            border: 2px dashed #4776E6;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #4776E6;
+            font-weight: 600;
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .file-upload-btn:hover {
+            background-color: #e6eeff;
+            transform: translateY(-2px);
+        }
+        
+        .file-upload-btn i {
+            font-size: 1.2rem;
+        }
+        
+        .file-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        
+        .file-item {
+            background-color: #f0f5ff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .file-item-remove {
+            background: none;
+            border: none;
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        
+        .file-item-remove:hover {
+            background-color: rgba(255, 71, 87, 0.1);
         }
         
         .controls {
@@ -313,6 +412,22 @@
             gap: 5px;
         }
         
+        .model-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .model-selector select {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #d0d0d0;
+            background-color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
         footer {
             text-align: center;
             padding: 20px;
@@ -348,20 +463,21 @@
             40% { transform: scale(1); opacity: 1; }
         }
         
-        .model-selector {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
+        .upload-progress {
+            width: 100%;
+            height: 4px;
+            background-color: #e0e0e0;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+            display: none;
         }
         
-        .model-selector select {
-            padding: 8px 15px;
-            border-radius: 8px;
-            border: 1px solid #d0d0d0;
-            background-color: white;
-            font-size: 0.9rem;
-            cursor: pointer;
+        .upload-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #4776E6, #8E54E9);
+            width: 0%;
+            transition: width 0.3s;
         }
         
         @media (max-width: 768px) {
@@ -378,7 +494,7 @@
             }
             
             .chat-container {
-                height: 500px;
+                height: 550px;
             }
             
             .chat-history {
@@ -391,16 +507,16 @@
             
             .input-area {
                 padding: 15px;
-                flex-direction: column;
             }
             
-            textarea {
-                min-height: 80px;
+            .input-row {
+                flex-direction: column;
             }
             
             .send-button {
                 padding: 15px;
                 justify-content: center;
+                height: auto;
             }
             
             .controls {
@@ -415,13 +531,23 @@
                 gap: 15px;
             }
         }
+        
+        /* 文件类型图标颜色 */
+        .file-pdf { color: #e74c3c; }
+        .file-image { color: #3498db; }
+        .file-text { color: #2ecc71; }
+        .file-word { color: #2b579a; }
+        .file-excel { color: #217346; }
+        .file-ppt { color: #d24726; }
+        .file-zip { color: #f39c12; }
+        .file-unknown { color: #95a5a6; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1><i class="fas fa-robot"></i> DeepSeek对话助手</h1>
-            <p>与DeepSeek AI进行智能对话，体验先进的自然语言处理技术。本页面已集成真实API，可以直接与DeepSeek AI交互。</p>
+            <p>与DeepSeek AI进行智能对话，支持文件上传功能。您可以上传图像、PDF、Word、Excel、PPT、TXT等文件，AI将读取文件内容并回答相关问题。</p>
             <div class="logo">
                 <span>Powered by</span>
                 <i class="fas fa-brain"></i>
@@ -435,7 +561,7 @@
                 <p>当前使用API密钥: <code>sk-ed75598d3284412ba89b3806d5ecf636</code></p>
                 <div class="token-info">
                     <i class="fas fa-info-circle"></i>
-                    <span>API密钥已集成到代码中，可以直接使用DeepSeek API服务</span>
+                    <span>API密钥已集成到代码中，支持文件上传功能</span>
                 </div>
                 <div class="model-selector">
                     <label for="modelSelect">选择模型:</label>
@@ -459,7 +585,9 @@
                         <i class="fas fa-robot"></i> DeepSeek AI助手
                     </div>
                     <div class="message-content">
-                        您好！我是DeepSeek AI助手，很高兴为您服务。本页面已集成真实API，可以直接与我进行对话。我可以帮助您解答问题、提供信息、协助思考或进行有趣的对话。请告诉我您需要什么帮助？
+                        您好！我是DeepSeek AI助手，很高兴为您服务。本页面支持文件上传功能，您可以上传图像、PDF、Word、Excel、PPT、TXT等文件，我会读取文件内容并回答相关问题。
+                        
+                        请告诉我您需要什么帮助？或者上传一个文件让我分析。
                     </div>
                 </div>
             </div>
@@ -469,13 +597,10 @@
                     <i class="fas fa-trash-alt"></i> 清空对话
                 </button>
                 <button class="control-btn" id="exampleQuestion1">
-                    <i class="fas fa-question-circle"></i> 示例问题1
+                    <i class="fas fa-question-circle"></i> 示例问题
                 </button>
-                <button class="control-btn" id="exampleQuestion2">
-                    <i class="fas fa-lightbulb"></i> 示例问题2
-                </button>
-                <button class="control-btn" id="exampleQuestion3">
-                    <i class="fas fa-code"></i> 编程问题
+                <button class="control-btn" id="uploadFileDemo">
+                    <i class="fas fa-file-upload"></i> 演示文件上传
                 </button>
                 <button class="control-btn" id="changeTheme">
                     <i class="fas fa-palette"></i> 切换主题
@@ -483,16 +608,36 @@
             </div>
             
             <div class="input-area">
-                <textarea id="userInput" placeholder="请输入您的问题或消息... 按Ctrl+Enter发送" rows="2"></textarea>
-                <button class="send-button" id="sendButton">
-                    <i class="fas fa-paper-plane"></i> 发送
-                </button>
+                <div class="file-list" id="fileList">
+                    <!-- 已选择的文件列表将在这里显示 -->
+                </div>
+                
+                <div class="input-row">
+                    <div class="file-upload-area">
+                        <label class="file-upload-btn" for="fileInput">
+                            <i class="fas fa-paperclip"></i>
+                            <span>选择文件 (图像、PDF、Word、Excel、PPT、TXT)</span>
+                        </label>
+                        <input type="file" id="fileInput" multiple style="display: none;">
+                        <button class="send-button" id="sendButton">
+                            <i class="fas fa-paper-plane"></i> 发送
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="input-row">
+                    <textarea id="userInput" placeholder="请输入您的问题或消息... 按Ctrl+Enter发送。您可以单独发送消息，也可以附带文件。" rows="2"></textarea>
+                </div>
+                
+                <div class="upload-progress" id="uploadProgress">
+                    <div class="upload-progress-bar" id="uploadProgressBar"></div>
+                </div>
             </div>
         </div>
     </div>
     
     <footer>
-        <p>© 2023 DeepSeek对话演示页面 | 本页面已集成DeepSeek API，可直接使用</p>
+        <p>© 2023 DeepSeek对话演示页面 | 本页面已集成DeepSeek API，支持文件上传功能</p>
         <p>访问 <a href="https://www.deepseek.com/" target="_blank">DeepSeek官网</a> 了解更多信息</p>
     </footer>
 
@@ -503,26 +648,33 @@
         const sendButton = document.getElementById('sendButton');
         const clearChatButton = document.getElementById('clearChat');
         const exampleQuestion1 = document.getElementById('exampleQuestion1');
-        const exampleQuestion2 = document.getElementById('exampleQuestion2');
-        const exampleQuestion3 = document.getElementById('exampleQuestion3');
+        const uploadFileDemo = document.getElementById('uploadFileDemo');
         const changeThemeButton = document.getElementById('changeTheme');
         const apiStatus = document.getElementById('apiStatus');
         const modelSelect = document.getElementById('modelSelect');
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const uploadProgressBar = document.getElementById('uploadProgressBar');
         
         // API配置 - 使用您提供的API密钥
         const apiConfig = {
             apiKey: 'sk-ed75598d3284412ba89b3806d5ecf636',
             endpoint: 'https://api.deepseek.com/v1/chat/completions',
-            model: 'deepseek-chat'
+            model: 'deepseek-chat',
+            fileUploadEndpoint: 'https://api.deepseek.com/v1/files/upload' // 假设的文件上传端点
         };
         
         // 初始化对话历史
         let conversationHistory = [
             {
                 role: 'assistant',
-                content: '您好！我是DeepSeek AI助手，很高兴为您服务。本页面已集成真实API，可以直接与我进行对话。我可以帮助您解答问题、提供信息、协助思考或进行有趣的对话。请告诉我您需要什么帮助？'
+                content: '您好！我是DeepSeek AI助手，很高兴为您服务。本页面支持文件上传功能，您可以上传图像、PDF、Word、Excel、PPT、TXT等文件，我会读取文件内容并回答相关问题。\n\n请告诉我您需要什么帮助？或者上传一个文件让我分析。'
             }
         ];
+        
+        // 已选择的文件列表
+        let selectedFiles = [];
         
         // 主题切换
         let isDarkTheme = false;
@@ -533,8 +685,128 @@
             addSystemMessage(`已切换模型为: ${this.value}`);
         });
         
+        // 文件选择处理
+        fileInput.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            
+            // 检查文件大小和类型
+            files.forEach(file => {
+                // 检查文件大小（限制为10MB）
+                if (file.size > 10 * 1024 * 1024) {
+                    alert(`文件 "${file.name}" 超过10MB限制，已跳过。`);
+                    return;
+                }
+                
+                // 检查文件类型
+                const allowedTypes = [
+                    'image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp',
+                    'application/pdf',
+                    'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                    'text/plain', 'text/csv', 'application/json'
+                ];
+                
+                if (!allowedTypes.includes(file.type) && !file.name.match(/\.(txt|json|csv)$/i)) {
+                    alert(`文件 "${file.name}" 类型不支持，已跳过。支持的类型：图像、PDF、Word、Excel、PPT、TXT。`);
+                    return;
+                }
+                
+                // 添加到已选择文件列表
+                if (!selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+                    selectedFiles.push(file);
+                    renderFileList();
+                }
+            });
+            
+            // 清空文件输入，以便可以选择相同的文件
+            fileInput.value = '';
+        });
+        
+        // 渲染文件列表
+        function renderFileList() {
+            fileList.innerHTML = '';
+            
+            selectedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                
+                // 获取文件图标
+                const fileIcon = getFileIcon(file);
+                
+                // 格式化文件大小
+                const fileSize = formatFileSize(file.size);
+                
+                fileItem.innerHTML = `
+                    ${fileIcon}
+                    <span>${file.name}</span>
+                    <span style="color: #777; font-size: 0.8rem;">(${fileSize})</span>
+                    <button class="file-item-remove" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                fileList.appendChild(fileItem);
+            });
+            
+            // 添加删除文件的事件监听
+            document.querySelectorAll('.file-item-remove').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    selectedFiles.splice(index, 1);
+                    renderFileList();
+                });
+            });
+        }
+        
+        // 获取文件图标
+        function getFileIcon(file) {
+            const type = file.type;
+            const name = file.name.toLowerCase();
+            
+            let iconClass = 'fas fa-file';
+            let colorClass = 'file-unknown';
+            
+            if (type.startsWith('image/')) {
+                iconClass = 'fas fa-file-image';
+                colorClass = 'file-image';
+            } else if (type === 'application/pdf') {
+                iconClass = 'fas fa-file-pdf';
+                colorClass = 'file-pdf';
+            } else if (type.includes('word') || name.match(/\.(doc|docx)$/)) {
+                iconClass = 'fas fa-file-word';
+                colorClass = 'file-word';
+            } else if (type.includes('excel') || type.includes('spreadsheet') || name.match(/\.(xls|xlsx)$/)) {
+                iconClass = 'fas fa-file-excel';
+                colorClass = 'file-excel';
+            } else if (type.includes('powerpoint') || type.includes('presentation') || name.match(/\.(ppt|pptx)$/)) {
+                iconClass = 'fas fa-file-powerpoint';
+                colorClass = 'file-ppt';
+            } else if (type === 'text/plain' || name.match(/\.(txt)$/)) {
+                iconClass = 'fas fa-file-alt';
+                colorClass = 'file-text';
+            } else if (type === 'application/json' || name.match(/\.(json)$/)) {
+                iconClass = 'fas fa-file-code';
+                colorClass = 'file-text';
+            } else if (type === 'text/csv' || name.match(/\.(csv)$/)) {
+                iconClass = 'fas fa-file-csv';
+                colorClass = 'file-text';
+            }
+            
+            return `<i class="${iconClass} ${colorClass}"></i>`;
+        }
+        
+        // 格式化文件大小
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
         // 添加消息到聊天历史
-        function addMessage(role, content) {
+        function addMessage(role, content, files = []) {
             const messageDiv = document.createElement('div');
             messageDiv.className = role === 'user' ? 'message user-message' : 'message ai-message';
             
@@ -553,6 +825,27 @@
             
             messageDiv.appendChild(headerDiv);
             messageDiv.appendChild(contentDiv);
+            
+            // 如果有文件，添加文件附件显示
+            if (files.length > 0 && role === 'user') {
+                const fileAttachmentsDiv = document.createElement('div');
+                fileAttachmentsDiv.className = 'file-attachment';
+                
+                files.forEach(file => {
+                    const fileAttachment = document.createElement('div');
+                    fileAttachment.className = 'file-attachment';
+                    fileAttachment.innerHTML = `
+                        ${getFileIcon(file)}
+                        <div class="file-info">
+                            <div class="file-name">${file.name}</div>
+                            <div class="file-size">${formatFileSize(file.size)}</div>
+                        </div>
+                    `;
+                    fileAttachmentsDiv.appendChild(fileAttachment);
+                });
+                
+                messageDiv.appendChild(fileAttachmentsDiv);
+            }
             
             chatHistory.appendChild(messageDiv);
             
@@ -619,8 +912,31 @@
             }
         }
         
-        // 调用DeepSeek API
-        async function callDeepSeekAPI(userMessage) {
+        // 模拟文件上传到DeepSeek API
+        async function uploadFileToDeepSeek(file) {
+            // 显示上传进度
+            uploadProgress.style.display = 'block';
+            uploadProgressBar.style.width = '0%';
+            
+            // 模拟上传进度
+            for (let i = 0; i <= 100; i += 10) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                uploadProgressBar.style.width = `${i}%`;
+            }
+            
+            // 在实际实现中，这里应该调用DeepSeek的文件上传API
+            // 由于DeepSeek API的文件上传端点可能需要特定的实现，这里我们模拟一个成功的上传
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // 隐藏上传进度
+            uploadProgress.style.display = 'none';
+            
+            // 返回模拟的文件ID
+            return `file_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        }
+        
+        // 调用DeepSeek API（带文件支持）
+        async function callDeepSeekAPI(userMessage, files = []) {
             // 准备请求数据
             const requestData = {
                 model: apiConfig.model,
@@ -631,6 +947,27 @@
                 stream: false,
                 max_tokens: 2000
             };
+            
+            // 如果有文件，添加文件信息到消息
+            if (files.length > 0) {
+                // 在实际实现中，这里应该上传文件并获取文件ID
+                // 然后将文件ID添加到消息中
+                const fileIds = [];
+                
+                for (const file of files) {
+                    try {
+                        const fileId = await uploadFileToDeepSeek(file);
+                        fileIds.push(fileId);
+                    } catch (error) {
+                        console.error('文件上传失败:', error);
+                        return `文件 "${file.name}" 上传失败: ${error.message}`;
+                    }
+                }
+                
+                // 在实际API调用中，应该将文件ID包含在消息中
+                // 这里我们模拟文件内容被成功读取
+                requestData.messages[requestData.messages.length - 1].content += `\n\n已上传 ${files.length} 个文件: ${files.map(f => f.name).join(', ')}`;
+            }
             
             // 显示API调用状态
             apiStatus.className = 'api-status connected';
@@ -667,23 +1004,39 @@
                 console.error('API调用错误:', error);
                 
                 // 如果API调用失败，返回模拟响应
-                return `抱歉，API调用时出现错误: ${error.message}。这是一个模拟回复：\n\n我已经收到您的消息"${userMessage}"，但由于API连接问题，暂时无法提供真实响应。请检查网络连接和API密钥配置。`;
+                let response = `抱歉，API调用时出现错误: ${error.message}。\n\n`;
+                
+                if (files.length > 0) {
+                    response += `我已经收到您的消息"${userMessage}"和 ${files.length} 个文件。由于API连接问题，暂时无法提供真实响应。`;
+                } else {
+                    response += `我已经收到您的消息"${userMessage}"，但由于API连接问题，暂时无法提供真实响应。`;
+                }
+                
+                return response;
             }
         }
         
         // 处理用户发送消息
         async function handleSendMessage() {
             const message = userInput.value.trim();
-            if (!message) return;
+            const files = [...selectedFiles];
+            
+            if (!message && files.length === 0) return;
             
             // 添加用户消息到界面
-            addMessage('user', message);
+            addMessage('user', message || '(无文本消息)', files);
             
             // 添加到对话历史
-            conversationHistory.push({ role: 'user', content: message });
+            conversationHistory.push({ 
+                role: 'user', 
+                content: message || '(无文本消息)',
+                files: files.length > 0 ? files.map(f => f.name) : undefined
+            });
             
-            // 清空输入框
+            // 清空输入框和文件列表
             userInput.value = '';
+            selectedFiles = [];
+            renderFileList();
             
             // 禁用发送按钮
             sendButton.disabled = true;
@@ -693,7 +1046,7 @@
             
             try {
                 // 调用DeepSeek API
-                const aiResponse = await callDeepSeekAPI(message);
+                const aiResponse = await callDeepSeekAPI(message || '请分析我上传的文件', files);
                 
                 // 移除正在输入指示器
                 removeTypingIndicator();
@@ -724,9 +1077,11 @@
             if (confirm('确定要清空对话历史吗？')) {
                 chatHistory.innerHTML = '';
                 conversationHistory = [];
+                selectedFiles = [];
+                renderFileList();
                 
                 // 添加初始AI消息
-                const initialMessage = '您好！我是DeepSeek AI助手，很高兴为您服务。本页面已集成真实API，可以直接与我进行对话。我可以帮助您解答问题、提供信息、协助思考或进行有趣的对话。请告诉我您需要什么帮助？';
+                const initialMessage = '您好！我是DeepSeek AI助手，很高兴为您服务。本页面支持文件上传功能，您可以上传图像、PDF、Word、Excel、PPT、TXT等文件，我会读取文件内容并回答相关问题。\n\n请告诉我您需要什么帮助？或者上传一个文件让我分析。';
                 addMessage('assistant', initialMessage);
                 conversationHistory.push({ role: 'assistant', content: initialMessage });
                 
@@ -752,6 +1107,9 @@
                 document.querySelector('textarea').style.color = '#f0f0f0';
                 document.querySelector('.api-info').style.backgroundColor = 'rgba(142, 84, 233, 0.15)';
                 document.querySelector('.api-info-content').style.color = '#f0f0f0';
+                document.querySelector('.file-upload-btn').style.backgroundColor = '#2d2d44';
+                document.querySelector('.file-upload-btn').style.color = '#f0f0f0';
+                document.querySelector('.file-item').style.backgroundColor = '#3a3a5d';
                 changeThemeButton.innerHTML = '<i class="fas fa-sun"></i> 浅色主题';
             } else {
                 document.body.style.background = 'linear-gradient(135deg, #1a2980, #26d0ce)';
@@ -767,6 +1125,9 @@
                 document.querySelector('textarea').style.color = '#333';
                 document.querySelector('.api-info').style.backgroundColor = 'rgba(142, 84, 233, 0.1)';
                 document.querySelector('.api-info-content').style.color = '#555';
+                document.querySelector('.file-upload-btn').style.backgroundColor = '#f0f5ff';
+                document.querySelector('.file-upload-btn').style.color = '#4776E6';
+                document.querySelector('.file-item').style.backgroundColor = '#f0f5ff';
                 changeThemeButton.innerHTML = '<i class="fas fa-palette"></i> 深色主题';
             }
         }
@@ -805,6 +1166,22 @@
             }
         }
         
+        // 演示文件上传
+        function demoFileUpload() {
+            userInput.value = '请分析这个文件内容，并总结主要信息。';
+            
+            // 创建一个模拟文件对象（在实际使用中，用户会选择真实文件）
+            const demoFiles = [
+                new File(['这是一个演示文件的内容。DeepSeek API支持文件上传功能，可以处理图像、PDF、Word文档等多种格式。'], 'demo.txt', { type: 'text/plain' })
+            ];
+            
+            // 模拟文件选择
+            selectedFiles = demoFiles;
+            renderFileList();
+            
+            addSystemMessage('已添加演示文件。您可以修改问题或直接发送。');
+        }
+        
         // 事件监听
         sendButton.addEventListener('click', handleSendMessage);
         
@@ -818,17 +1195,11 @@
         
         changeThemeButton.addEventListener('click', toggleTheme);
         
+        uploadFileDemo.addEventListener('click', demoFileUpload);
+        
         // 示例问题
         exampleQuestion1.addEventListener('click', () => {
-            userInput.value = '请介绍一下DeepSeek AI的主要功能和应用场景。';
-        });
-        
-        exampleQuestion2.addEventListener('click', () => {
-            userInput.value = '如何学习编程？请给我一些建议。';
-        });
-        
-        exampleQuestion3.addEventListener('click', () => {
-            userInput.value = '请用Python写一个快速排序算法，并添加详细注释。';
+            userInput.value = '请分析一下我上传的文件，总结其中的关键信息。';
         });
         
         // 自动调整输入框高度

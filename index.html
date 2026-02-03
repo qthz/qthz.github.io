@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>给胡伊菡的毕业纪念</title>
+    <title>我好喜欢你</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
     <style>
@@ -784,8 +784,8 @@
             </div>
             <div class="info">
                 <h2>胡伊菡</h2>
-                <p>六年级 · 喜欢分享零食</p>
-                <p>温暖的朋友 · 总是带给别人快乐</p>
+                <p>虽然是ai写的</p>
+                <p>但是我还是觉得你</p>
                 <p>真诚善良 · 心思细腻</p>
             </div>
         </div>
@@ -795,18 +795,15 @@
             <div class="message-content" id="messageContent">
                 <p>胡伊菡：</p>
                 <p>毕业了，还是想给你留几句话。</p>
-                <p>想起在软件上聊天的这些日子。你高兴了会告诉我，难过了也会找我。每次你发来消息，我都觉得挺安心的。我心情不好的时候，你总能看出来，说几句宽心的话。还有你常说的那些零食，听着就觉得有滋味。</p>
-                <p>你总提自己成绩一般，但我记得的都是你安慰人时的样子，分零食时的开心。这些比分数要紧得多。你身上有种少见的真诚，和你聊天从来不用多想什么。</p>
-                <p>以后上中学了，见面的机会大概少了。但我觉得像你这样能体谅别人、心思又细的人，到哪里都会很好的。成绩的事慢慢来，别太为难自己。</p>
-                <p>要是以后还有高兴的、不高兴的事，还是可以像现在这样跟我说说。</p>
-                <p>祝一切都好，开心点。</p>
+                <p>你自己成绩一般，但我记得的都是你安慰人时的样子，分零食时的开心。这些比</p>
+                <p>分数要紧得多。你身上有种少见的真诚，和你聊天从来不用多想什么，不会有那</p>
+                <p>种会被转发的不安。</p>
+                <p>以后上中学了，那大抵也是永别。但我觉得像你这样能体谅别人、心思又细的人，</p>
+                <p>到哪里都会有很多朋友的。</p>
+                <p>不要拉黑我行吗qwq</p>
             </div>
-            <div class="signature">你永远的朋友</div>
+            <div class="signature">叫你妈妈的人--</div>
         </div>
-        
-        <div class="interactive-section">
-            <button class="btn btn-primary" id="changeColorBtn">
-                <i class="fas fa-palette"></i> 换个主题色
             </button>
             <button class="btn btn-secondary" id="surpriseBtn">
                 <i class="fas fa-gift"></i> 毕业小惊喜
@@ -818,10 +815,6 @@
         
         <div class="memory-box">
             <h4><i class="fas fa-heart"></i> 我们的记忆碎片</h4>
-            <div class="memories">
-                <div class="memory-item">
-                    <i class="fas fa-cookie-bite"></i>
-                    <div>分享零食的快乐</div>
                 </div>
                 <div class="memory-item">
                     <i class="fas fa-comments"></i>
@@ -908,7 +901,7 @@
             }, 200);
             
             // 显示通知
-            showNotification(`主题已切换至第 ${colorIndex + 1} 套配色`);
+          
         });
         
         // 更新渐变
@@ -972,14 +965,7 @@
             playSoundEffect();
         });
         
-        // 记忆重现按钮
-        const memoryBtn = document.getElementById('memoryBtn');
-        const memories = [
-            { title: "零食分享时刻", content: "还记得你每次分享零食时开心的样子，那些小糖果、薯片，不只是零食，更是你温暖心意的传递。" },
-            { title: "深夜聊天", content: "那些深夜的对话，你分享快乐，倾诉烦恼，让普通的夜晚变得特别而珍贵。" },
-            { title: "互相安慰", content: "在我难过时，你总能察觉并送来安慰。虽然话不多，但每一句都真诚而温暖。" },
-            { title: "真诚对话", content: "和你聊天从来不用多想什么，你的真诚让每一次交流都变得轻松而愉快。" }
-        ];
+
         
         memoryBtn.addEventListener('click', function() {
             const randomMemory = memories[Math.floor(Math.random() * memories.length)];
@@ -1079,7 +1065,7 @@
                 oscillator.start(audioContext.currentTime);
                 oscillator.stop(audioContext.currentTime + 1);
             } catch (e) {
-                console.log("音频播放失败，但不影响功能");
+                console.log("error");
             }
         }
         

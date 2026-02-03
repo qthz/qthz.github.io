@@ -663,9 +663,7 @@
             
             // 添加示例留言（如果本地存储为空）
             if (!localStorage.getItem('ly_messages')) {
-                const initialMessages = `[2026/02/03](毕业了，希望你永远开心快乐！)
-[2026/02/03](我会一直记得你的，胡伊菡！)
-[2026/02/03](希望你前程似锦，一切顺利！)`;
+                const initialMessages = ``;
                 localStorage.setItem('ly_messages', initialMessages);
                 loadMessages();
             }

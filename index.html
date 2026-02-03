@@ -13,7 +13,7 @@
         
         body {
             font-family: "SimSun", "宋体", serif;
-            background-color: #fff5f5; /* 略微粉色背景 */
+            background-color: #fff5f5;
             color: #333;
             line-height: 1.8;
             padding: 20px;
@@ -26,11 +26,10 @@
             overflow-x: hidden;
         }
         
-        /* 爱心背景元素 */
         .heart-bg {
             position: absolute;
             font-size: 24px;
-            color: rgba(255, 182, 193, 0.3); /* 浅粉色爱心 */
+            color: rgba(255, 182, 193, 0.3);
             z-index: -1;
             user-select: none;
         }
@@ -39,7 +38,7 @@
             flex: 1;
             padding: 40px 20px;
             position: relative;
-            background-color: white; /* 白色背景底 */
+            background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
@@ -62,7 +61,6 @@
             font-style: normal;
         }
         
-        /* 新增的照片板块样式 */
         .photo-section {
             margin: 60px 0 40px;
             padding: 30px 20px;
@@ -165,25 +163,6 @@
             transform: translateY(0);
         }
         
-        .photo-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #f8f8f8;
-            color: #888;
-            font-size: 16px;
-        }
-        
-        .photo-placeholder .icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-            color: #ffb6c1;
-        }
-        
-        /* 留言板样式 */
         .message-board {
             margin-top: 60px;
             padding: 30px 20px;
@@ -234,21 +213,34 @@
             margin-bottom: 30px;
         }
         
-        .message-input {
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .message-input, .name-input {
             width: 100%;
-            height: 100px;
-            padding: 15px;
+            padding: 12px 15px;
             border: 1px solid #ffc0cb;
             border-radius: 8px;
             font-family: inherit;
             font-size: 16px;
-            resize: vertical;
-            margin-bottom: 15px;
             background-color: #fffefe;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         
-        .message-input:focus {
+        .message-input {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .message-input:focus, .name-input:focus {
             outline: none;
             border-color: #ff6b81;
             box-shadow: 0 0 0 2px rgba(255, 107, 129, 0.2);
@@ -258,7 +250,7 @@
             background-color: #ff6b81;
             color: white;
             border: none;
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
@@ -268,6 +260,11 @@
         
         .submit-btn:hover {
             background-color: #e63946;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
         
         .message-list {
@@ -286,11 +283,20 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
         
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .message-name {
+            font-weight: bold;
+            color: #e63946;
+        }
+        
         .message-date {
             font-size: 14px;
-            color: #ff6b81;
-            margin-bottom: 8px;
-            font-weight: bold;
+            color: #888;
         }
         
         .message-content {
@@ -303,6 +309,26 @@
             color: #999;
             padding: 30px;
             font-style: italic;
+        }
+        
+        .status-message {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            text-align: center;
+            display: none;
+        }
+        
+        .status-success {
+            background-color: #e6f7ee;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        
+        .status-error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
         }
         
         .edit-space {
@@ -318,14 +344,6 @@
             font-weight: normal;
             font-size: 16px;
             white-space: pre-line;
-        }
-        
-        /* 照片上传提示 */
-        .upload-hint {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #888;
-            font-style: italic;
         }
         
         @media (max-width: 768px) {
@@ -406,21 +424,18 @@
             <div class="photo-gallery">
                 <!-- 第一张照片 -->
                 <div class="photo-item">
-                    <!-- 这里替换成你的图片URL -->
                     <img src="https://s3.bmp.ovh/2026/02/03/jBRBbFjc.jpg" alt="咋拍的忘了">
                     <div class="photo-caption">是你</div>
                 </div>
                 
                 <!-- 第二张照片 -->
                 <div class="photo-item">
-                    <!-- 这里替换成你的图片URL -->
                     <img src="https://s3.bmp.ovh/2026/02/03/sQTLVeMX.jpg" alt="你做了一个西瓜牛奶想打我">
                     <div class="photo-caption">还是你</div>
                 </div>
                 
                 <!-- 第三张照片 -->
                 <div class="photo-item">
-                    <!-- 这里替换成你的图片URL -->
                     <img src="https://s3.bmp.ovh/2026/02/03/WjLYAn26.jpg" alt="我的世界头套，当时是六一儿童节">
                     <div class="photo-caption">依旧是你</div>
                 </div>
@@ -433,9 +448,26 @@
         <div class="message-board">
             <h2 class="message-title">留言板</h2>
             
+            <div id="statusMessage" class="status-message"></div>
+            
+            <form class="message-form" id="messageForm">
+                <div class="form-group">
+                    <label for="nameInput" class="form-label">你的名字：</label>
+                    <input type="text" id="nameInput" class="name-input" placeholder="请输入你的名字" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="messageInput" class="form-label">留言内容：</label>
+                    <textarea class="message-input" id="messageInput" placeholder="在这里写下你想对胡伊菡说的话..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">提交留言</button>
+                <div style="clear: both;"></div>
+            </form>
+            
             <div class="message-list" id="messageList">
                 <!-- 留言将在这里动态显示 -->
-                <div class="empty-message">还没有留言，快来写下第一条吧~</div>
+                <div class="empty-message">留言加载中...</div>
             </div>
         </div>
         
@@ -444,29 +476,23 @@
 常会网站看看，我说不定啥时候就更新一下
 图片在2036过期，你要就赶紧下载
 这不是我能决定的awa</h3>
-            <!-- 这里可以添加更多内容 -->
         </div>
     </div>
     
     <script>
-        // 添加更多随机爱心
+        // 添加随机爱心
         function addMoreHearts() {
             const body = document.body;
-            const heartCount = 8; // 总共8个爱心
+            const heartCount = 8;
             
             for (let i = 0; i < heartCount; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart-bg';
                 heart.innerHTML = '❤';
                 
-                // 随机位置
                 const top = Math.random() * 100;
                 const left = Math.random() * 100;
-                
-                // 随机大小
                 const size = Math.random() * 20 + 16;
-                
-                // 随机透明度
                 const opacity = Math.random() * 0.2 + 0.1;
                 
                 heart.style.top = `${top}%`;
@@ -474,7 +500,6 @@
                 heart.style.fontSize = `${size}px`;
                 heart.style.color = `rgba(255, 182, 193, ${opacity})`;
                 
-                // 随机旋转角度
                 const rotation = Math.random() * 360;
                 heart.style.transform = `rotate(${rotation}deg)`;
                 
@@ -482,11 +507,252 @@
             }
         }
         
-        // 页面加载完成后添加更多爱心
+        // 显示状态消息
+        function showStatusMessage(message, type) {
+            const statusElement = document.getElementById('statusMessage');
+            statusElement.textContent = message;
+            statusElement.className = `status-message status-${type}`;
+            statusElement.style.display = 'block';
+            
+            setTimeout(() => {
+                statusElement.style.display = 'none';
+            }, 3000);
+        }
+        
+        // 获取当前日期，格式为yy/mm/dd
+        function getCurrentDate() {
+            const now = new Date();
+            const year = String(now.getFullYear()).slice(-2);
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            return `${year}/${month}/${dd}`;
+        }
+        
+        // 从note.ms加载留言
+        async function loadMessages() {
+            const messageList = document.getElementById('messageList');
+            
+            try {
+                // 使用CORS代理来绕过跨域限制
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                const targetUrl = 'https://note.ms/huyihanliuyan';
+                
+                const response = await fetch(proxyUrl + targetUrl);
+                
+                if (!response.ok) {
+                    throw new Error('无法加载留言');
+                }
+                
+                const text = await response.text();
+                
+                // 提取留言内容 - note.ms的HTML结构
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+                
+                // 尝试找到textarea内容
+                const textarea = doc.querySelector('textarea');
+                let messagesText = '';
+                
+                if (textarea && textarea.value) {
+                    messagesText = textarea.value;
+                } else {
+                    // 尝试从其他位置获取内容
+                    const contentDiv = doc.querySelector('.content');
+                    if (contentDiv) {
+                        messagesText = contentDiv.textContent;
+                    }
+                }
+                
+                if (!messagesText.trim()) {
+                    messageList.innerHTML = '<div class="empty-message">还没有留言，快来写下第一条吧~</div>';
+                    return;
+                }
+                
+                // 解析留言
+                const messages = parseMessages(messagesText);
+                displayMessages(messages);
+                
+            } catch (error) {
+                console.error('加载留言时出错:', error);
+                // 尝试直接访问，不使用代理
+                try {
+                    const response = await fetch('https://note.ms/huyihanliuyan/text');
+                    if (response.ok) {
+                        const text = await response.text();
+                        const messages = parseMessages(text);
+                        displayMessages(messages);
+                        return;
+                    }
+                } catch (e) {
+                    // 如果都失败，显示本地备份
+                    const backup = localStorage.getItem('hu_yihan_messages_backup');
+                    if (backup) {
+                        const messages = parseMessages(backup);
+                        displayMessages(messages);
+                        showStatusMessage('使用本地备份留言（网络连接失败）', 'error');
+                    } else {
+                        messageList.innerHTML = '<div class="empty-message">暂时无法加载留言，请稍后再试</div>';
+                    }
+                }
+            }
+        }
+        
+        // 解析留言文本
+        function parseMessages(text) {
+            const lines = text.trim().split('\n');
+            const messages = [];
+            
+            for (const line of lines) {
+                if (line.trim()) {
+                    // 匹配格式：[yy/mm/dd][name] message
+                    const match = line.match(/\[(\d{2}\/\d{2}\/\d{2})\]\[([^\]]+)\]\s*(.+)/);
+                    if (match) {
+                        const date = match[1];
+                        const name = match[2];
+                        const message = match[3];
+                        messages.push({ date, name, message });
+                    }
+                }
+            }
+            
+            return messages;
+        }
+        
+        // 显示留言
+        function displayMessages(messages) {
+            const messageList = document.getElementById('messageList');
+            
+            if (!messages || messages.length === 0) {
+                messageList.innerHTML = '<div class="empty-message">还没有留言，快来写下第一条吧~</div>';
+                return;
+            }
+            
+            // 显示最新留言在前
+            const sortedMessages = [...messages].reverse();
+            let html = '';
+            
+            sortedMessages.forEach(item => {
+                html += `
+                <div class="message-item">
+                    <div class="message-header">
+                        <div class="message-name">${item.name}</div>
+                        <div class="message-date">${item.date}</div>
+                    </div>
+                    <div class="message-content">${item.message}</div>
+                </div>
+                `;
+            });
+            
+            messageList.innerHTML = html;
+        }
+        
+        // 保存留言到note.ms
+        async function saveMessage(name, message) {
+            try {
+                const now = new Date();
+                const year = String(now.getFullYear()).slice(-2);
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const date = `${year}/${month}/${day}`;
+                
+                // 格式化为：[yy/mm/dd][name] message
+                const formattedMessage = `[${date}][${name}] ${message}`;
+                
+                // 由于跨域限制，我们无法直接POST到note.ms
+                // 使用一个简单的替代方法：打开新窗口让用户手动保存
+                const noteMsUrl = 'https://note.ms/huyihanliuyan';
+                
+                // 创建一个隐藏的textarea来复制内容
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.value = formattedMessage;
+                tempTextarea.style.position = 'fixed';
+                tempTextarea.style.opacity = '0';
+                document.body.appendChild(tempTextarea);
+                tempTextarea.select();
+                
+                try {
+                    // 尝试复制到剪贴板
+                    const copied = document.execCommand('copy');
+                    
+                    if (copied) {
+                        // 打开note.ms，用户需要手动粘贴并保存
+                        window.open(noteMsUrl, '_blank');
+                        
+                        // 同时保存到localStorage作为备份
+                        const existingMessages = localStorage.getItem('hu_yihan_messages_backup') || '';
+                        localStorage.setItem('hu_yihan_messages_backup', existingMessages + formattedMessage + '\n');
+                        
+                        // 立即显示新留言
+                        const messageList = document.getElementById('messageList');
+                        const firstMessage = messageList.querySelector('.empty-message');
+                        
+                        if (firstMessage && firstMessage.textContent.includes('还没有留言')) {
+                            messageList.innerHTML = '';
+                        }
+                        
+                        const newMessageHtml = `
+                        <div class="message-item">
+                            <div class="message-header">
+                                <div class="message-name">${name}</div>
+                                <div class="message-date">${date}</div>
+                            </div>
+                            <div class="message-content">${message}</div>
+                        </div>
+                        `;
+                        
+                        messageList.innerHTML = newMessageHtml + messageList.innerHTML;
+                        
+                        return true;
+                    } else {
+                        throw new Error('无法复制到剪贴板');
+                    }
+                } catch (copyError) {
+                    // 如果复制失败，提供手动操作指导
+                    showStatusMessage(`请手动操作：1. 打开 ${noteMsUrl} 2. 粘贴: ${formattedMessage}`, 'error');
+                    
+                    // 保存到localStorage
+                    const existingMessages = localStorage.getItem('hu_yihan_messages_backup') || '';
+                    localStorage.setItem('hu_yihan_messages_backup', existingMessages + formattedMessage + '\n');
+                    
+                    // 显示新留言
+                    const messageList = document.getElementById('messageList');
+                    const firstMessage = messageList.querySelector('.empty-message');
+                    
+                    if (firstMessage && firstMessage.textContent.includes('还没有留言')) {
+                        messageList.innerHTML = '';
+                    }
+                    
+                    const newMessageHtml = `
+                    <div class="message-item">
+                        <div class="message-header">
+                            <div class="message-name">${name}</div>
+                            <div class="message-date">${date}</div>
+                        </div>
+                        <div class="message-content">${message}</div>
+                    </div>
+                    `;
+                    
+                    messageList.innerHTML = newMessageHtml + messageList.innerHTML;
+                    
+                    return false;
+                } finally {
+                    document.body.removeChild(tempTextarea);
+                }
+                
+            } catch (error) {
+                console.error('保存留言时出错:', error);
+                showStatusMessage('保存失败，请稍后重试', 'error');
+                return false;
+            }
+        }
+        
+        // 页面加载完成后初始化
         window.addEventListener('load', function() {
             addMoreHearts();
             
-            // 添加照片悬停效果增强
+            // 添加照片悬停效果
             const photoItems = document.querySelectorAll('.photo-item');
             photoItems.forEach(item => {
                 item.addEventListener('mouseenter', function() {
@@ -497,6 +763,55 @@
                     this.style.zIndex = '1';
                 });
             });
+            
+            // 加载已有留言
+            loadMessages();
+            
+            // 处理留言表单提交
+            const messageForm = document.getElementById('messageForm');
+            const nameInput = document.getElementById('nameInput');
+            const messageInput = document.getElementById('messageInput');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            messageForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const name = nameInput.value.trim();
+                const message = messageInput.value.trim();
+                
+                if (!name) {
+                    showStatusMessage('请输入你的名字', 'error');
+                    return;
+                }
+                
+                if (!message) {
+                    showStatusMessage('请输入留言内容', 'error');
+                    return;
+                }
+                
+                // 禁用提交按钮防止重复提交
+                submitBtn.disabled = true;
+                submitBtn.textContent = '提交中...';
+                
+                // 保存留言
+                const success = await saveMessage(name, message);
+                
+                // 重新启用提交按钮
+                submitBtn.disabled = false;
+                submitBtn.textContent = '提交留言';
+                
+                if (success) {
+                    // 清空输入框
+                    nameInput.value = '';
+                    messageInput.value = '';
+                    
+                    // 显示成功消息
+                    showStatusMessage('留言已复制！请在新打开的页面中粘贴并保存', 'success');
+                }
+            });
+            
+            // 定期刷新留言
+            setInterval(loadMessages, 60000); // 每分钟刷新一次
         });
     </script>
 </body>

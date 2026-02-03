@@ -270,11 +270,6 @@
             background-color: #e63946;
         }
         
-        .submit-btn:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-        
         .message-list {
             border-top: 1px solid #ffe6e6;
             padding-top: 20px;
@@ -308,26 +303,6 @@
             color: #999;
             padding: 30px;
             font-style: italic;
-        }
-        
-        .status-message {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            text-align: center;
-            display: none;
-        }
-        
-        .status-success {
-            background-color: #e6f7ee;
-            color: #2e7d32;
-            border: 1px solid #a5d6a7;
-        }
-        
-        .status-error {
-            background-color: #ffebee;
-            color: #c62828;
-            border: 1px solid #ef9a9a;
         }
         
         .edit-space {
@@ -458,14 +433,6 @@
         <div class="message-board">
             <h2 class="message-title">留言板</h2>
             
-            <div id="statusMessage" class="status-message"></div>
-            
-            <form class="message-form" id="messageForm">
-                <textarea class="message-input" id="messageInput" placeholder="在这里写下你想对胡伊菡说的话..." required></textarea>
-                <button type="submit" class="submit-btn" id="submitBtn">提交留言</button>
-                <div style="clear: both;"></div>
-            </form>
-            
             <div class="message-list" id="messageList">
                 <!-- 留言将在这里动态显示 -->
                 <div class="empty-message">还没有留言，快来写下第一条吧~</div>
@@ -515,103 +482,7 @@
             }
         }
         
-        // 显示状态消息
-        function showStatusMessage(message, type) {
-            const statusElement = document.getElementById('statusMessage');
-            statusElement.textContent = message;
-            statusElement.className = `status-message status-${type}`;
-            statusElement.style.display = 'block';
-            
-            // 3秒后自动隐藏
-            setTimeout(() => {
-                statusElement.style.display = 'none';
-            }, 3000);
-        }
-        
-        // 获取当前日期，格式为yyyy/mm/dd
-        function getCurrentDate() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            return `${year}/${month}/${day}`;
-        }
-        
-        // 保存留言到ly.txt
-        async function saveMessageToFile(message) {
-            try {
-                const date = getCurrentDate();
-                const formattedMessage = `[${date}](${message})\n`;
-                
-                // 由于浏览器安全限制，前端JavaScript无法直接写入本地文件
-                // 这里我们使用一种替代方案：将留言添加到页面中并提供一个下载链接
-                // 在实际部署中，您需要一个后端API来处理文件写入
-                
-                // 模拟保存到本地存储（用于演示）
-                let messages = localStorage.getItem('ly_messages') || '';
-                messages += formattedMessage;
-                localStorage.setItem('ly_messages', messages);
-                
-                // 显示成功消息
-                showStatusMessage('留言已保存！', 'success');
-                
-                // 重新加载留言列表
-                loadMessages();
-                
-                // 提供一个下载链接（仅适用于小量数据）
-                setTimeout(() => {
-                    const blob = new Blob([messages], { type: 'text/plain' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                  
-                    a.click();
-                    URL.revokeObjectURL(url);
-                }, 100);
-                
-                return true;
-            } catch (error) {
-                console.error('保存留言时出错:', error);
-                showStatusMessage('保存留言时出错，请重试', 'error');
-                return false;
-            }
-        }
-        
-        // 从本地存储加载留言
-        function loadMessages() {
-            const messageList = document.getElementById('messageList');
-            const messages = localStorage.getItem('ly_messages');
-            
-            if (!messages) {
-                messageList.innerHTML = '<div class="empty-message">还没有留言，快来写下第一条吧~</div>';
-                return;
-            }
-            
-            // 解析留言内容
-            const messageLines = messages.split('\n').filter(line => line.trim());
-            let html = '';
-            
-            // 显示最新留言在前
-            messageLines.reverse().forEach(line => {
-                // 解析格式 [yyyy/mm/dd](具体内容)
-                const match = line.match(/^\[([^\]]+)\]\((.+)\)$/);
-                if (match) {
-                    const date = match[1];
-                    const content = match[2];
-                    
-                    html += `
-                    <div class="message-item">
-                        <div class="message-date">${date}</div>
-                        <div class="message-content">${content}</div>
-                    </div>
-                    `;
-                }
-            });
-            
-            messageList.innerHTML = html || '<div class="empty-message">还没有留言，快来写下第一条吧~</div>';
-        }
-        
-        // 页面加载完成后初始化
+        // 页面加载完成后添加更多爱心
         window.addEventListener('load', function() {
             addMoreHearts();
             
@@ -626,47 +497,6 @@
                     this.style.zIndex = '1';
                 });
             });
-            
-            // 加载已有留言
-            loadMessages();
-            
-            // 处理留言表单提交
-            const messageForm = document.getElementById('messageForm');
-            const messageInput = document.getElementById('messageInput');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            messageForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const message = messageInput.value.trim();
-                if (!message) {
-                    showStatusMessage('请输入留言内容', 'error');
-                    return;
-                }
-                
-                // 禁用提交按钮防止重复提交
-                submitBtn.disabled = true;
-                submitBtn.textContent = '提交中...';
-                
-                // 保存留言
-                const success = await saveMessageToFile(message);
-                
-                // 重新启用提交按钮
-                submitBtn.disabled = false;
-                submitBtn.textContent = '提交留言';
-                
-                if (success) {
-                    // 清空输入框
-                    messageInput.value = '';
-                }
-            });
-            
-            // 添加示例留言（如果本地存储为空）
-            if (!localStorage.getItem('ly_messages')) {
-                const initialMessages = ``;
-                localStorage.setItem('ly_messages', initialMessages);
-                loadMessages();
-            }
         });
     </script>
 </body>

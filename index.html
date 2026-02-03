@@ -13,7 +13,7 @@
         
         body {
             font-family: "SimSun", "宋体", serif;
-            background-color: #fefefe;
+            background-color: #fff5f5; /* 略微粉色背景 */
             color: #333;
             line-height: 1.8;
             padding: 20px;
@@ -22,12 +22,26 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 爱心背景元素 */
+        .heart-bg {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(255, 182, 193, 0.3); /* 浅粉色爱心 */
+            z-index: -1;
+            user-select: none;
         }
         
         .container {
             flex: 1;
             padding: 40px 20px;
             position: relative;
+            background-color: white; /* 白色背景底 */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
         
         .content {
@@ -60,6 +74,7 @@
             color: #666;
             font-weight: normal;
             font-size: 16px;
+            white-space: pre-line;
         }
         
         @media (max-width: 600px) {
@@ -78,6 +93,14 @@
     </style>
 </head>
 <body>
+    <!-- 背景爱心 -->
+    <div class="heart-bg" style="top: 10%; left: 5%;">❤</div>
+    <div class="heart-bg" style="top: 20%; right: 8%; font-size: 32px;">❤</div>
+    <div class="heart-bg" style="top: 50%; left: 3%; font-size: 28px;">❤</div>
+    <div class="heart-bg" style="top: 70%; right: 5%;">❤</div>
+    <div class="heart-bg" style="top: 30%; left: 10%; font-size: 20px;">❤</div>
+    <div class="heart-bg" style="top: 85%; right: 15%;">❤</div>
+    
     <div class="container">
         <div class="content">
             <p>胡伊菡：</p>
@@ -93,9 +116,50 @@
         <div class="signature">叫你妈妈的人--</div>
         
         <div class="edit-space">
-            <h3>你肯定会记得我，对吧？\n 常会网站看看，我说不定啥时候就更新一下</h3>
+            <h3>你肯定会记得我，对吧？
+常会网站看看，我说不定啥时候就更新一下</h3>
             <!-- 这里可以添加更多内容 -->
         </div>
     </div>
+    
+    <script>
+        // 添加更多随机爱心
+        function addMoreHearts() {
+            const body = document.body;
+            const heartCount = 8; // 总共8个爱心
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.innerHTML = '❤';
+                
+                // 随机位置
+                const top = Math.random() * 100;
+                const left = Math.random() * 100;
+                
+                // 随机大小
+                const size = Math.random() * 20 + 16;
+                
+                // 随机透明度
+                const opacity = Math.random() * 0.2 + 0.1;
+                
+                heart.style.top = `${top}%`;
+                heart.style.left = `${left}%`;
+                heart.style.fontSize = `${size}px`;
+                heart.style.color = `rgba(255, 182, 193, ${opacity})`;
+                
+                // 随机旋转角度
+                const rotation = Math.random() * 360;
+                heart.style.transform = `rotate(${rotation}deg)`;
+                
+                body.appendChild(heart);
+            }
+        }
+        
+        // 页面加载完成后添加更多爱心
+        window.addEventListener('load', function() {
+            addMoreHearts();
+        });
+    </script>
 </body>
 </html>

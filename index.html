@@ -183,6 +183,153 @@
             color: #ffb6c1;
         }
         
+        /* 留言板样式 */
+        .message-board {
+            margin-top: 60px;
+            padding: 30px 20px;
+            background-color: #fff9f9;
+            border-radius: 12px;
+            border: 1px solid #ffe6e6;
+            position: relative;
+        }
+        
+        .message-board::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffb6c1, #ffc0cb, #ffb6c1);
+        }
+        
+        .message-title {
+            font-size: 22px;
+            color: #e63946;
+            margin-bottom: 25px;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .message-title::after {
+            content: "💬";
+            position: absolute;
+            right: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+        
+        .message-title::before {
+            content: "💬";
+            position: absolute;
+            left: -35px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+        
+        .message-form {
+            margin-bottom: 30px;
+        }
+        
+        .message-input {
+            width: 100%;
+            height: 100px;
+            padding: 15px;
+            border: 1px solid #ffc0cb;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            resize: vertical;
+            margin-bottom: 15px;
+            background-color: #fffefe;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            border-color: #ff6b81;
+            box-shadow: 0 0 0 2px rgba(255, 107, 129, 0.2);
+        }
+        
+        .submit-btn {
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            float: right;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e63946;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .message-list {
+            border-top: 1px solid #ffe6e6;
+            padding-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .message-item {
+            background-color: white;
+            border-left: 3px solid #ffc0cb;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .message-date {
+            font-size: 14px;
+            color: #ff6b81;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .message-content {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .empty-message {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+        
+        .status-message {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            text-align: center;
+            display: none;
+        }
+        
+        .status-success {
+            background-color: #e6f7ee;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+        }
+        
+        .status-error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        
         .edit-space {
             margin-top: 40px;
             padding: 20px;
@@ -225,6 +372,11 @@
             .photo-title::before {
                 display: none;
             }
+            
+            .message-title::after,
+            .message-title::before {
+                display: none;
+            }
         }
         
         @media (max-width: 600px) {
@@ -241,6 +393,10 @@
             }
             
             .photo-section {
+                padding: 20px 15px;
+            }
+            
+            .message-board {
                 padding: 20px 15px;
             }
         }
@@ -298,11 +454,29 @@
             <p class="upload-hint">qwq我太喜欢你了❤</p>
         </div>
         
+        <!-- 新增的留言板 -->
+        <div class="message-board">
+            <h2 class="message-title">留言板</h2>
+            
+            <div id="statusMessage" class="status-message"></div>
+            
+            <form class="message-form" id="messageForm">
+                <textarea class="message-input" id="messageInput" placeholder="在这里写下你想对胡伊菡说的话..." required></textarea>
+                <button type="submit" class="submit-btn" id="submitBtn">提交留言</button>
+                <div style="clear: both;"></div>
+            </form>
+            
+            <div class="message-list" id="messageList">
+                <!-- 留言将在这里动态显示 -->
+                <div class="empty-message">还没有留言，快来写下第一条吧~</div>
+            </div>
+        </div>
+        
         <div class="edit-space">
             <h3>你肯定会记得我，对吧？
 常会网站看看，我说不定啥时候就更新一下
-            图片在2036过期，你要就赶紧下载
-            这不是我能决定的awa</h3>
+图片在2036过期，你要就赶紧下载
+这不是我能决定的awa</h3>
             <!-- 这里可以添加更多内容 -->
         </div>
     </div>
@@ -341,7 +515,103 @@
             }
         }
         
-        // 页面加载完成后添加更多爱心
+        // 显示状态消息
+        function showStatusMessage(message, type) {
+            const statusElement = document.getElementById('statusMessage');
+            statusElement.textContent = message;
+            statusElement.className = `status-message status-${type}`;
+            statusElement.style.display = 'block';
+            
+            // 3秒后自动隐藏
+            setTimeout(() => {
+                statusElement.style.display = 'none';
+            }, 3000);
+        }
+        
+        // 获取当前日期，格式为yyyy/mm/dd
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}/${month}/${day}`;
+        }
+        
+        // 保存留言到ly.txt
+        async function saveMessageToFile(message) {
+            try {
+                const date = getCurrentDate();
+                const formattedMessage = `[${date}](${message})\n`;
+                
+                // 由于浏览器安全限制，前端JavaScript无法直接写入本地文件
+                // 这里我们使用一种替代方案：将留言添加到页面中并提供一个下载链接
+                // 在实际部署中，您需要一个后端API来处理文件写入
+                
+                // 模拟保存到本地存储（用于演示）
+                let messages = localStorage.getItem('ly_messages') || '';
+                messages += formattedMessage;
+                localStorage.setItem('ly_messages', messages);
+                
+                // 显示成功消息
+                showStatusMessage('留言已保存！', 'success');
+                
+                // 重新加载留言列表
+                loadMessages();
+                
+                // 提供一个下载链接（仅适用于小量数据）
+                setTimeout(() => {
+                    const blob = new Blob([messages], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'ly.txt';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }, 100);
+                
+                return true;
+            } catch (error) {
+                console.error('保存留言时出错:', error);
+                showStatusMessage('保存留言时出错，请重试', 'error');
+                return false;
+            }
+        }
+        
+        // 从本地存储加载留言
+        function loadMessages() {
+            const messageList = document.getElementById('messageList');
+            const messages = localStorage.getItem('ly_messages');
+            
+            if (!messages) {
+                messageList.innerHTML = '<div class="empty-message">还没有留言，快来写下第一条吧~</div>';
+                return;
+            }
+            
+            // 解析留言内容
+            const messageLines = messages.split('\n').filter(line => line.trim());
+            let html = '';
+            
+            // 显示最新留言在前
+            messageLines.reverse().forEach(line => {
+                // 解析格式 [yyyy/mm/dd](具体内容)
+                const match = line.match(/^\[([^\]]+)\]\((.+)\)$/);
+                if (match) {
+                    const date = match[1];
+                    const content = match[2];
+                    
+                    html += `
+                    <div class="message-item">
+                        <div class="message-date">${date}</div>
+                        <div class="message-content">${content}</div>
+                    </div>
+                    `;
+                }
+            });
+            
+            messageList.innerHTML = html || '<div class="empty-message">还没有留言，快来写下第一条吧~</div>';
+        }
+        
+        // 页面加载完成后初始化
         window.addEventListener('load', function() {
             addMoreHearts();
             
@@ -356,6 +626,49 @@
                     this.style.zIndex = '1';
                 });
             });
+            
+            // 加载已有留言
+            loadMessages();
+            
+            // 处理留言表单提交
+            const messageForm = document.getElementById('messageForm');
+            const messageInput = document.getElementById('messageInput');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            messageForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const message = messageInput.value.trim();
+                if (!message) {
+                    showStatusMessage('请输入留言内容', 'error');
+                    return;
+                }
+                
+                // 禁用提交按钮防止重复提交
+                submitBtn.disabled = true;
+                submitBtn.textContent = '提交中...';
+                
+                // 保存留言
+                const success = await saveMessageToFile(message);
+                
+                // 重新启用提交按钮
+                submitBtn.disabled = false;
+                submitBtn.textContent = '提交留言';
+                
+                if (success) {
+                    // 清空输入框
+                    messageInput.value = '';
+                }
+            });
+            
+            // 添加示例留言（如果本地存储为空）
+            if (!localStorage.getItem('ly_messages')) {
+                const initialMessages = `[2026/02/03](毕业了，希望你永远开心快乐！)
+[2026/02/03](我会一直记得你的，胡伊菡！)
+[2026/02/03](希望你前程似锦，一切顺利！)`;
+                localStorage.setItem('ly_messages', initialMessages);
+                loadMessages();
+            }
         });
     </script>
 </body>

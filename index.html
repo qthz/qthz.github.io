@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qthzZ - 自我介绍</title>
+    <style>
+        /* 基础重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', "Microsoft YaHei", sans-serif;
+        }
+
+        /* 背景设置，配合图片的冷蓝幽暗色调 */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #172554 100%);
+            color: #f8fafc;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* 动态背景光晕效果 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(56, 189, 248, 0.15);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: 0;
+            animation: float 6s infinite alternate ease-in-out;
+        }
+
+        /* 核心卡片容器：毛玻璃效果 */
+        .card {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: row;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 850px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            gap: 40px;
+        }
+
+        /* 左侧图片区域 */
+        .image-container {
+            flex: 0 0 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .image-container img:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(56, 189, 248, 0.2);
+        }
+
+        /* 右侧信息区域 */
+        .info-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #bae6fd, #e0f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 特别的话 */
+        .special-quote {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #93c5fd;
+            margin-bottom: 30px;
+            padding-left: 15px;
+            border-left: 4px solid #3b82f6;
+            letter-spacing: 1px;
+        }
+
+        /* 社交链接列表 */
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-decoration: none;
+            color: #e2e8f0;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+        }
+
+        .link-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateX(10px);
+            color: #fff;
+        }
+
+        .icon {
+            margin-right: 15px;
+            font-size: 1.3em;
+        }
+
+        /* 微信不可点击，单独样式 */
+        .wechat-box {
+            cursor: default;
+        }
+        .wechat-box:hover {
+            transform: none; /* 移除位移 */
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+        .wechat-ids {
+            color: #60a5fa;
+            font-weight: bold;
+            margin-left: auto; /* 推到右边 */
+        }
+
+        /* 动画关键帧 */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); }
+            100% { transform: translateY(20px) translateX(20px); }
+        }
+
+        /* 响应式设计：手机端适配 */
+        @media (max-width: 768px) {
+            .card {
+                flex-direction: column;
+                padding: 30px 20px;
+                gap: 20px;
+            }
+            .image-container {
+                flex: none;
+                width: 100%;
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            .title {
+                font-size: 2em;
+                text-align: center;
+            }
+            .special-quote {
+                text-align: center;
+                border-left: none;
+                padding-left: 0;
+            }
+            .wechat-ids {
+                margin-left: 10px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="image-container">
+            <img src="1000055208.jpg" alt="Profile Image">
+        </div>
+
+        <div class="info-container">
+            <h1 class="title">Hi, 我是 qthzZ</h1>
+            
+            <p class="special-quote">“我最喜欢胡妈妈”</p>
+
+            <div class="links-list">
+                <a href="https://x.com/qthzZ" target="_blank" class="link-item">
+                    <span class="icon">🐦</span>
+                    <span class="text">X (Twitter) : @qthzZ</span>
+                </a>
+
+                <a href="https://qm.qq.com/q/IA2WDQcPG8" target="_blank" class="link-item">
+                    <span class="icon">🐧</span>
+                    <span class="text">添加我的 QQ</span>
+                </a>
+
+                <a href="mailto:qthzawa@gmail.com" class="link-item">
+                    <span class="icon">✉️</span>
+                    <span class="text">qthzawa@gmail.com</span>
+                </a>
+
+                <div class="link-item wechat-box">
+                    <span class="icon">💬</span>
+                    <span class="text">微信 (WeChat)</span>
+                    <span class="wechat-ids">Toeddesert1170<br>或 LXQTHZ</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

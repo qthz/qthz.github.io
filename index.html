@@ -96,7 +96,7 @@
         /* 手写签名 SVG 区域 */
         .signature-container {
             width: 100%;
-            height: 80px; /* 固定高度防止页面跳动 */
+            height: 90px; /* 固定高度防止页面跳动 */
             margin: 10px auto 30px auto;
             display: flex;
             justify-content: center;
@@ -104,15 +104,15 @@
         }
 
         .signature-svg {
-            width: 80%; /* 保证手机端不会太大 */
-            max-width: 250px;
+            width: 85%; /* 保证手机端不会太大 */
+            max-width: 300px;
             height: auto;
             overflow: visible;
         }
 
         .signature-path {
             stroke: #fff;
-            stroke-width: 3.5;
+            stroke-width: 4; /* 增加笔画厚度 */
             stroke-linecap: round;
             stroke-linejoin: round;
             fill: none;
@@ -121,9 +121,9 @@
             stroke-dashoffset: 2000;
         }
 
-        /* 动画类：由JS触发，速度1.8s */
+        /* 动画类：由JS触发，速度1.6s */
         .signature-path.draw {
-            animation: drawLine 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: drawLine 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         /* 链接列表 */
@@ -176,14 +176,7 @@
             <div class="signature-container">
                 <svg class="signature-svg" viewBox="0 0 380 160">
                     <path class="signature-path" id="signaturePath" d="
-                        M 40 100 C 20 100, 30 40, 60 40 C 80 40, 60 110, 50 130 C 40 150, 80 140, 90 110 
-                        L 100 140 L 115 110 L 125 140 L 140 110 
-                        L 150 140 L 160 110 L 170 140 L 180 110 L 190 140 L 200 110 
-                        L 210 140 L 220 110 L 220 140 
-                        M 220 130 L 260 60 L 250 140 
-                        M 240 100 L 300 85 
-                        M 315 85 A 15 15 0 0 1 335 75 A 15 15 0 0 1 355 85 Q 355 105 335 125 Q 315 105 315 85 Z
-                    " />
+                        M 51 106 c -15 16 -28 27 -35 23 -7 -4 2 -26 11 -49 s 26 -38 42 -34 c 16 4 25 24 29 44 s 4 43 0 57 -4 14 -12 19 -24 19 -12 0 -20 -11 -22 -24 -2 -13 -11 -44 -7 -58 4 -14 10 -26 17 -33 7 -7 15 -10 23 -10 8 0 17 16 24 35 7 19 6 40 2 54 L 112 106 M 140 124 L 156 124 c 0 0 2 -8 7 -4 5 4 -3 13 -3 13 0 0 8 -9 5 -5 2 -14 2 -14 L 196 143 c 0 0 2 -8 7 -5 5 3 0 21 0 21 L 187 154 c 0 0 -3 -8 -7 -5 0 21 0 21 L 164 165 c 0 0 -3 -8 -8 -4 Z M 156 124 c 0 0 4 7 9 9 Z M 178 129 c 0 0 4 7 9 9 Z M 203 138 c 0 0 4 7 9 8 L 216 146 M 164 165 M 180 165 Z" />
                 </svg>
             </div>
 
@@ -254,7 +247,7 @@
             let g = '你好！';
             if (n.getHours() < 6) g = '夜深了，注意休息 🌙';
             else if (n.getHours() < 12) g = '早上好，新的一天 ☀️';
-            else if (n.getHours() < 18) g = '下午好 ☕';
+            else if (n.getHours() < 18) g = '下午好 咖啡';
             else g = '晚上好 🌟';
             document.getElementById('greeting').innerText = g;
         }
